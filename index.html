@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DBMS Interactive Lab | Storage, Indexing & Hashing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">DB</span><div><b>DBMS Lab</b><small>LEARNING STUDIO</small></div></div>
+    <div class="nav-label">LEARNING SPACE</div>
+    <button class="nav active" data-page="overview">▦ <span>Overview</span></button>
+    <button class="nav" data-page="files">▤ <span>File Organization</span></button>
+    <button class="nav" data-page="indexing">⌕ <span>Indexing & Trees</span></button>
+    <button class="nav" data-page="hashing">⌘ <span>Hashing Playground</span></button>
+    <button class="nav" data-page="quiz">✓ <span>Quiz Center</span></button>
+    <div class="sidebar-note"><div class="note-icon">✦</div><b>Learn by doing</b><p>Explore database concepts with interactive examples.</p></div>
+    <div class="sidebar-footer">ADVANCED DBMS · LECTURE 02</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><div><span class="crumb">Learning space</span><span class="slash"> / </span><span id="currentCrumb">Overview</span></div><div class="top-actions"><span class="live-dot"></span> Interactive demo <span class="avatar">SZ</span></div></header>
+    <section class="page active" id="page-overview">
+      <div class="hero">
+        <div class="hero-copy"><div class="eyebrow">ADVANCED DBMS · PRACTICAL LAB</div><h1>Understand databases.<br><em>One interaction at a time.</em></h1><p>Explore storage, file organization, indexes, trees and hashing through practical visual demonstrations.</p><button class="primary" data-goto="files">Start exploring <span>→</span></button></div>
+        <div class="hero-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="database-illustration"><div class="db-cap"></div><div class="db-layer layer-one"><span>DATA</span></div><div class="db-layer layer-two"></div><div class="db-layer layer-three"></div><div class="db-base"></div></div><div class="float-card float-top">⌕ <span>Fast lookup</span></div><div class="float-card float-bottom">✓ <span>Learn interactively</span></div></div>
+      </div>
+      <div class="section-heading"><div><div class="eyebrow">YOUR WORKSPACE</div><h2>Explore the lab</h2><p>Choose a module to see the concepts in action.</p></div><span class="pill">4 MODULES</span></div>
+      <div class="module-grid">
+        <button class="module-card" data-goto="files"><span class="module-icon blue">▤</span><span class="card-tag">MODULE 01</span><h3>File Organization</h3><p>Compare heap, ordered and hash-based records.</p><span class="card-link">Open simulator →</span></button>
+        <button class="module-card" data-goto="indexing"><span class="module-icon purple">⌕</span><span class="card-tag">MODULE 02</span><h3>Indexing & Trees</h3><p>Learn index types and explore B-Tree concepts.</p><span class="card-link">Explore indexing →</span></button>
+        <button class="module-card" data-goto="hashing"><span class="module-icon orange">⌘</span><span class="card-tag">MODULE 03</span><h3>Hashing Playground</h3><p>Calculate buckets and observe collisions.</p><span class="card-link">Try hashing →</span></button>
+        <button class="module-card" data-goto="quiz"><span class="module-icon green">✓</span><span class="card-tag">MODULE 04</span><h3>Quiz Center</h3><p>Test your understanding with instant feedback.</p><span class="card-link">Take a quiz →</span></button>
+      </div>
+      <div class="bottom-grid"><div class="panel"><div class="panel-title"><div><h3>Database access workflow</h3><p>A simplified view of how data gets accessed</p></div><span class="soft-label">OVERVIEW</span></div><div class="workflow"><div class="workflow-step"><span class="wf-icon">▤</span><b>Storage</b><small>Data files & pages</small></div><span class="wf-arrow">→</span><div class="workflow-step"><span class="wf-icon purple-text">⌕</span><b>Index / Hash</b><small>Locate a record</small></div><span class="wf-arrow">→</span><div class="workflow-step"><span class="wf-icon green-text">✓</span><b>Result</b><small>Return data</small></div></div></div><div class="panel callout"><span class="spark">✦</span><div><h3>Presentation-ready learning</h3><p>Each module includes definitions, examples and practical controls you can demonstrate in class.</p></div></div></div>
+    </section>
+
+    <section class="page" id="page-files">
+      <div class="page-intro"><div class="eyebrow">MODULE 01</div><h1>File Organization</h1><p>See how the same student records behave under different file organization strategies.</p></div>
+      <div class="panel controls-panel"><div class="panel-title"><div><h3>Student records</h3><p>Add a record or choose an organization method.</p></div><span class="soft-label" id="recordCount">4 RECORDS</span></div><div class="input-row"><label>Student ID<input id="studentId" type="number" placeholder="e.g. 106" min="1"></label><label>Student name<input id="studentName" placeholder="e.g. Zoya"></label><button class="primary" id="addRecord">+ Add record</button></div><div class="tabs" id="fileTabs"><button class="tab active" data-mode="heap">Heap</button><button class="tab" data-mode="ordered">Ordered</button><button class="tab" data-mode="hash">Hash-based</button></div><div class="table-wrap"><table><thead><tr><th>Position / Bucket</th><th>Student ID</th><th>Name</th><th>Storage note</th></tr></thead><tbody id="recordsBody"></tbody></table></div><div class="insight" id="fileInsight"></div></div>
+      <div class="two-col"><div class="panel"><h3>Find a student</h3><p>Search records by ID to discuss lookup behavior.</p><div class="input-row search-row"><input id="searchId" type="number" placeholder="Enter student ID"><button class="secondary" id="searchRecord">Search</button></div><div id="searchResult" class="result-box muted">Try searching for a student ID.</div></div><div class="panel"><h3>Compare the strategies</h3><div class="comparison-list"><div><b>Heap</b><p>Records are not kept in a particular key order. Insertions are often simple.</p></div><div><b>Ordered</b><p>Records are arranged by key. Ordered traversal and range queries are useful.</p></div><div><b>Hash-based</b><p>A hash function maps keys to buckets; collisions need handling.</p></div></div></div></div>
+    </section>
+
+    <section class="page" id="page-indexing">
+      <div class="page-intro"><div class="eyebrow">MODULE 02</div><h1>Indexing & Trees</h1><p>An index is like a book index: it helps locate relevant data without checking every record.</p></div>
+      <div class="two-col">
+        <div class="panel"><div class="panel-title"><div><h3>Index type explorer</h3><p>Select a concept to see a worked example.</p></div></div><label class="field-label">Choose a concept<select id="indexType"><option value="dense">Dense index</option><option value="sparse">Sparse index</option><option value="primary">Primary index</option><option value="secondary">Secondary index</option></select></label><div id="indexVisual" class="index-visual"></div><div class="insight" id="indexExplanation"></div></div>
+        <div class="panel"><div class="panel-title"><div><h3>Tree search demo</h3><p>Choose a key and follow a simplified search path.</p></div><span class="soft-label">ILLUSTRATION</span></div><div class="tree-kind"><button class="tab active" data-tree="btree">B-Tree concept</button><button class="tab" data-tree="bplus">B+ Tree concept</button></div><label class="field-label">Search key<select id="treeKey"><option value="20">20</option><option value="40">40</option><option value="50">50</option><option value="70">70</option><option value="90">90 (not present)</option></select></label><div id="treeVisual" class="tree-visual"></div><div class="insight" id="treeExplanation"></div></div>
+      </div>
+      <div class="panel note-panel"><b>Remember:</b> A B+ Tree keeps data entries at the leaf level in the common textbook model, and its linked leaves make ordered traversal and range queries convenient. Actual DBMS implementations can vary.</div>
+    </section>
+
+    <section class="page" id="page-hashing">
+      <div class="page-intro"><div class="eyebrow">MODULE 03</div><h1>Hashing Playground</h1><p>Enter keys, calculate buckets and watch collision handling happen visually.</p></div>
+      <div class="panel"><div class="panel-title"><div><h3>Hash function simulator</h3><p>Current function: <code>h(k) = k mod 10</code></p></div><span class="soft-label">LIVE CALCULATION</span></div><div class="input-row"><label>Enter key<input type="number" id="hashKey" placeholder="e.g. 123"></label><label>Collision strategy<select id="collisionMode"><option value="chain">Chaining</option><option value="linear">Open addressing (linear probing)</option></select></label><button class="primary" id="insertHash">Insert key</button><button class="secondary" id="resetHash">Reset</button></div><div class="calc-explainer" id="hashCalculation">Try inserting 123, 143 and 153 to see a collision.</div><div class="bucket-grid" id="bucketGrid"></div><div class="insight" id="hashInsight"></div></div>
+      <div class="two-col"><div class="panel"><h3>How collisions are handled</h3><div class="comparison-list"><div><b>Chaining</b><p>Multiple keys that map to the same bucket are grouped in a chain.</p></div><div><b>Open addressing</b><p>If a slot is occupied, probe another slot according to a rule such as linear probing.</p></div></div></div><div class="panel"><h3>Static vs dynamic hashing</h3><div class="comparison-list"><div><b>Static hashing</b><p>Uses a fixed basic bucket structure; overflow may need extra handling.</p></div><div><b>Dynamic hashing</b><p>Can split or expand buckets as data grows. Extendible hashing is one example.</p></div></div></div></div>
+    </section>
+
+    <section class="page" id="page-quiz">
+      <div class="page-intro"><div class="eyebrow">MODULE 04</div><h1>Quiz Center</h1><p>Check your understanding with 10 practice questions and explanations.</p></div>
+      <div class="quiz-layout"><div class="panel quiz-panel"><div class="quiz-progress"><span id="quizCounter">QUESTION 01 / 10</span><span id="quizScoreLabel">Practice mode</span></div><div class="progress-track"><div id="quizProgress" class="progress-fill"></div></div><div id="quizQuestion"></div><div id="quizFeedback" class="quiz-feedback hidden"></div><div class="quiz-actions"><button class="secondary" id="prevQuestion">← Previous</button><button class="primary" id="nextQuestion">Next question →</button></div></div><div class="panel quiz-side"><span class="module-icon purple">✓</span><h3>Practice with purpose</h3><p>Choose an answer to receive instant feedback. Finish all questions to view your score.</p><div class="stat-line"><span>Questions</span><b>10</b></div><div class="stat-line"><span>Topics</span><b>4</b></div><div class="stat-line"><span>Mode</span><b>Practice</b></div><button class="secondary full" id="restartQuiz">Restart quiz</button></div></div>
+    </section>
+    <footer>DBMS INTERACTIVE LAB <span>Built for learning · Storage, Indexing & Hashing</span></footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
